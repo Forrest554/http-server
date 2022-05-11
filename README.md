@@ -58,5 +58,24 @@
   server1.Start(":8080")
   ```
 
+
+
+
+## Version_0.2：对Context继续抽象
+
+- 封装Server接口修改
+
+  ```go
+  type Server interface {
+  	Route(pattern string, handlerFunc func(ctx *Context))
+  	Start(address string) error
+  }
   
+  func (s *sdkHttpServer) Route(pattern string, handlerFunc func(ctx *Context)) {
+  	http.HandleFunc(pattern, func(writer http.ResponseWriter, request *http.Request) {
+  		ctx := NewContext(writer, request)
+  		handlerFunc(ctx)
+  	})
+  }
+  ```
 
