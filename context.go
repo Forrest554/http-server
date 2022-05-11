@@ -15,7 +15,7 @@ type Context struct {
 
 // 对req的json处理，并对err进行封装
 // 使用obj interface{}作为参数，能接受任意类型参数
-func (c Context) ReadJson(req interface{}) error {
+func (c *Context) ReadJson(req interface{}) error {
 	r := c.R
 	w := c.W
 	body, err := io.ReadAll(r.Body)
@@ -33,7 +33,7 @@ func (c Context) ReadJson(req interface{}) error {
 	return nil
 }
 
-func (c Context) WriteJson(code int, res interface{}) error {
+func (c *Context) WriteJson(code int, res interface{}) error {
 	c.W.WriteHeader(code)
 	if res != nil {
 		// 正确响应
@@ -47,14 +47,14 @@ func (c Context) WriteJson(code int, res interface{}) error {
 	return nil
 }
 
-func (c Context) OKJson(res interface{}) error {
+func (c *Context) OKJson(res interface{}) error {
 	return c.WriteJson(http.StatusOK, res)
 }
 
-func (c Context) SystemErrorJson(res interface{}) error {
+func (c *Context) SystemErrorJson(res interface{}) error {
 	return c.WriteJson(http.StatusInternalServerError, res)
 }
 
-func (c Context) BadRequestJson(res interface{}) error {
+func (c *Context) BadRequestJson(res interface{}) error {
 	return c.WriteJson(http.StatusBadRequest, res)
 }

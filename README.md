@@ -11,7 +11,6 @@
 - 封装Server接口
 
   ```go
-  package main
   type Server interface {
      Route(pattern string, handlerFunc fhttp.HandlerFunc)
      Start(address string) error
@@ -40,11 +39,11 @@
   	W http.ResponseWriter
   	R *http.Request
   }
-  func (c Context) ReadJson(req interface{}) error
-  func (c Context) WriteJson(code int, res interface{}) error
-  func (c Context) OKJson(res interface{}) error
-  func (c Context) SystemErrorJson(res interface{}) error
-  func (c Context) BadRequestJson(res interface{}) error
+  func (c *Context) ReadJson(req interface{}) error
+  func (c *Context) WriteJson(code int, res interface{}) error
+  func (c *Context) OKJson(res interface{}) error
+  func (c *Context) SystemErrorJson(res interface{}) error
+  func (c *Context) BadRequestJson(res interface{}) error
   ```
 
   - 使用结构体而不是接口的原因：？？？

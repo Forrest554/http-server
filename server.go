@@ -16,7 +16,7 @@ func (s *sdkHttpServer) Route(pattern string, handlerFunc http.HandlerFunc) {
 	http.HandleFunc(pattern, handlerFunc)
 }
 
-func (s sdkHttpServer) Start(address string) error {
+func (s *sdkHttpServer) Start(address string) error {
 	return http.ListenAndServe(address, nil)
 }
 
