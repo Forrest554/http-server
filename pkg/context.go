@@ -1,4 +1,4 @@
-package main
+package pkg
 
 import (
 	"encoding/json"
@@ -8,9 +8,16 @@ import (
 )
 
 // 上下文 选择是结合体而不是接口的原因：交给框架
+// context的进一步抽象，不希望用户创建context，让web框架去创建
+
 type Context struct {
 	W http.ResponseWriter
 	R *http.Request
+}
+
+func NewContext(w http.ResponseWriter, r *http.Request) *Context {
+	ctx := &Context{W: w, R: r}
+	return ctx
 }
 
 // 对req的json处理，并对err进行封装

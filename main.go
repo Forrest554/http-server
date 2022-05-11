@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	"net/http"
+	"http-server/pkg"
 )
 
-func home(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "这是主页")
+func home(ctx *pkg.Context) {
+	fmt.Fprintf(ctx.W, "这是主页")
 }
 
 type signUpReq struct {
@@ -21,9 +21,8 @@ type commonResponse struct {
 	//Data    interface{} `json:"data"`
 }
 
-func SignUp(w http.ResponseWriter, r *http.Request) {
+func SignUp(ctx *pkg.Context) {
 	req := &signUpReq{}
-	ctx := &Context{W: w, R: r}
 	err := ctx.ReadJson(req)
 	if err != nil {
 		// 上述处理失败了
@@ -42,7 +41,7 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	server1 := NewServer("server-1")
+	server1 := pkg.NewServer("server-1")
 	server1.Route("/", home)
 	server1.Route("/sign", SignUp)
 	server1.Start(":8080")
